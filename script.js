@@ -1,52 +1,3 @@
-// const URL = "https://api.mfapi.in/mf/125497/latest";
-// const fundHouseCell = document.querySelector('#fund_house');
-// const schemeTypeCell = document.querySelector('#scheme_type');
-// const schemeCategoryCell = document.querySelector('#scheme_category');
-// const schemeCodeCell = document.querySelector('#scheme_code');
-// const schemeNameCell = document.querySelector('#scheme_name');
-// const isinGrowthCell = document.querySelector('#isin_growth');
-// const dateCell = document.querySelector('#date');
-// const navCell = document.querySelector('#nav');
-// const getData = document.querySelector('#getdata');
-
-
-// getData.addEventListener("click", () => {
-//     getNav();
-// })
-// let promise = fetch(URL);
-
-// // const getNav = async () => {
-// //     let nav = await fetch(URL);
-// //     let navData = await nav.json();
-// //     fundHouseCell.textContent = navData.meta.fund_house;
-// //     schemeTypeCell.textContent = navData.meta.scheme_type;
-// //     schemeCategoryCell.textContent = navData.meta.scheme_category;
-// //     schemeCodeCell.textContent = navData.meta.scheme_code;
-// //     schemeNameCell.textContent = navData.meta.scheme_name;
-// //     isinGrowthCell.textContent = navData.meta.isin_growth;
-// //     dateCell.textContent = navData.data[0].date;
-// //     navCell.textContent = navData.data[0].nav;
-// // }
-
-// function getNav() {
-//     fetch(URL)
-//         .then((response) => {
-//             return response.json(); // Call the json() method
-//         })
-//         .then((navData) => {
-//             fundHouseCell.textContent = navData.meta.fund_house;
-//             schemeTypeCell.textContent = navData.meta.scheme_type;
-//             schemeCategoryCell.textContent = navData.meta.scheme_category;
-//             schemeCodeCell.textContent = navData.meta.scheme_code;
-//             schemeNameCell.textContent = navData.meta.scheme_name;
-//             isinGrowthCell.textContent = navData.meta.isin_growth;
-//             dateCell.textContent = navData.data[0].date;
-//             navCell.textContent = navData.data[0].nav;
-//         })
-//         .catch((error) => {
-//             console.error("Error fetching data:", error);
-//         });
-// }
 const countryList = {
     AED: "AE",
     AFN: "AF",
@@ -261,3 +212,4 @@ btn.addEventListener("click", async (evt) => {
             })
             .catch(error => console.error('Error:', error));
 })
+
