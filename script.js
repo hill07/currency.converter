@@ -1,0 +1,263 @@
+// const URL = "https://api.mfapi.in/mf/125497/latest";
+// const fundHouseCell = document.querySelector('#fund_house');
+// const schemeTypeCell = document.querySelector('#scheme_type');
+// const schemeCategoryCell = document.querySelector('#scheme_category');
+// const schemeCodeCell = document.querySelector('#scheme_code');
+// const schemeNameCell = document.querySelector('#scheme_name');
+// const isinGrowthCell = document.querySelector('#isin_growth');
+// const dateCell = document.querySelector('#date');
+// const navCell = document.querySelector('#nav');
+// const getData = document.querySelector('#getdata');
+
+
+// getData.addEventListener("click", () => {
+//     getNav();
+// })
+// let promise = fetch(URL);
+
+// // const getNav = async () => {
+// //     let nav = await fetch(URL);
+// //     let navData = await nav.json();
+// //     fundHouseCell.textContent = navData.meta.fund_house;
+// //     schemeTypeCell.textContent = navData.meta.scheme_type;
+// //     schemeCategoryCell.textContent = navData.meta.scheme_category;
+// //     schemeCodeCell.textContent = navData.meta.scheme_code;
+// //     schemeNameCell.textContent = navData.meta.scheme_name;
+// //     isinGrowthCell.textContent = navData.meta.isin_growth;
+// //     dateCell.textContent = navData.data[0].date;
+// //     navCell.textContent = navData.data[0].nav;
+// // }
+
+// function getNav() {
+//     fetch(URL)
+//         .then((response) => {
+//             return response.json(); // Call the json() method
+//         })
+//         .then((navData) => {
+//             fundHouseCell.textContent = navData.meta.fund_house;
+//             schemeTypeCell.textContent = navData.meta.scheme_type;
+//             schemeCategoryCell.textContent = navData.meta.scheme_category;
+//             schemeCodeCell.textContent = navData.meta.scheme_code;
+//             schemeNameCell.textContent = navData.meta.scheme_name;
+//             isinGrowthCell.textContent = navData.meta.isin_growth;
+//             dateCell.textContent = navData.data[0].date;
+//             navCell.textContent = navData.data[0].nav;
+//         })
+//         .catch((error) => {
+//             console.error("Error fetching data:", error);
+//         });
+// }
+const countryList = {
+    AED: "AE",
+    AFN: "AF",
+    XCD: "AG",
+    ALL: "AL",
+    AMD: "AM",
+    ANG: "AN",
+    AOA: "AO",
+    AQD: "AQ",
+    ARS: "AR",
+    AUD: "AU",
+    AZN: "AZ",
+    BAM: "BA",
+    BBD: "BB",
+    BDT: "BD",
+    XOF: "BE",
+    BGN: "BG",
+    BHD: "BH",
+    BIF: "BI",
+    BMD: "BM",
+    BND: "BN",
+    BOB: "BO",
+    BRL: "BR",
+    BSD: "BS",
+    NOK: "BV",
+    BWP: "BW",
+    BYR: "BY",
+    BZD: "BZ",
+    CAD: "CA",
+    CDF: "CD",
+    XAF: "CF",
+    CHF: "CH",
+    CLP: "CL",
+    CNY: "CN",
+    COP: "CO",
+    CRC: "CR",
+    CUP: "CU",
+    CVE: "CV",
+    CYP: "CY",
+    CZK: "CZ",
+    DJF: "DJ",
+    DKK: "DK",
+    DOP: "DO",
+    DZD: "DZ",
+    ECS: "EC",
+    EEK: "EE",
+    EGP: "EG",
+    ETB: "ET",
+    EUR: "FR",
+    FJD: "FJ",
+    FKP: "FK",
+    GBP: "GB",
+    GEL: "GE",
+    GGP: "GG",
+    GHS: "GH",
+    GIP: "GI",
+    GMD: "GM",
+    GNF: "GN",
+    GTQ: "GT",
+    GYD: "GY",
+    HKD: "HK",
+    HNL: "HN",
+    HRK: "HR",
+    HTG: "HT",
+    HUF: "HU",
+    IDR: "ID",
+    ILS: "IL",
+    INR: "IN",
+    IQD: "IQ",
+    IRR: "IR",
+    ISK: "IS",
+    JMD: "JM",
+    JOD: "JO",
+    JPY: "JP",
+    KES: "KE",
+    KGS: "KG",
+    KHR: "KH",
+    KMF: "KM",
+    KPW: "KP",
+    KRW: "KR",
+    KWD: "KW",
+    KYD: "KY",
+    KZT: "KZ",
+    LAK: "LA",
+    LBP: "LB",
+    LKR: "LK",
+    LRD: "LR",
+    LSL: "LS",
+    LTL: "LT",
+    LVL: "LV",
+    LYD: "LY",
+    MAD: "MA",
+    MDL: "MD",
+    MGA: "MG",
+    MKD: "MK",
+    MMK: "MM",
+    MNT: "MN",
+    MOP: "MO",
+    MRO: "MR",
+    MTL: "MT",
+    MUR: "MU",
+    MVR: "MV",
+    MWK: "MW",
+    MXN: "MX",
+    MYR: "MY",
+    MZN: "MZ",
+    NAD: "NA",
+    XPF: "NC",
+    NGN: "NG",
+    NIO: "NI",
+    NPR: "NP",
+    NZD: "NZ",
+    OMR: "OM",
+    PAB: "PA",
+    PEN: "PE",
+    PGK: "PG",
+    PHP: "PH",
+    PKR: "PK",
+    PLN: "PL",
+    PYG: "PY",
+    QAR: "QA",
+    RON: "RO",
+    RSD: "RS",
+    RUB: "RU",
+    RWF: "RW",
+    SAR: "SA",
+    SBD: "SB",
+    SCR: "SC",
+    SDG: "SD",
+    SEK: "SE",
+    SGD: "SG",
+    SKK: "SK",
+    SLL: "SL",
+    SOS: "SO",
+    SRD: "SR",
+    STD: "ST",
+    SVC: "SV",
+    SYP: "SY",
+    SZL: "SZ",
+    THB: "TH",
+    TJS: "TJ",
+    TMT: "TM",
+    TND: "TN",
+    TOP: "TO",
+    TRY: "TR",
+    TTD: "TT",
+    TWD: "TW",
+    TZS: "TZ",
+    UAH: "UA",
+    UGX: "UG",
+    USD: "US",
+    UYU: "UY",
+    UZS: "UZ",
+    VEF: "VE",
+    VND: "VN",
+    VUV: "VU",
+    YER: "YE",
+    ZAR: "ZA",
+    ZMK: "ZM",
+    ZWD: "ZW",
+};
+
+
+const dropdowns = document.querySelectorAll(".dropdown select");
+const btn = document.querySelector("#getRate");
+const fromCurr = document.querySelector("#fromSelect");
+const toCurr = document.querySelector("#toSelect");
+const msg= document.querySelector(".msg");
+
+for (let select of dropdowns) {
+    for (code in countryList) {
+        let newOption = document.createElement("option");
+        newOption.innerText = code;
+        newOption.value = code;
+        if (select.name === "form" && code === "USD") {
+            newOption.selected = "selected";
+        }
+        else if (select.name === "to" && code === "INR") {
+            newOption.selected = "selected";
+        }
+        select.append(newOption);
+    } select.addEventListener("change", (evt) => {
+        updateFlag(evt.target);
+    })
+}
+const updateFlag = (flagCode) => {
+    let curCode = flagCode.value;
+    let countryCode = countryList[curCode];
+    let newScr = `https://flagsapi.com/${countryCode}/flat/64.png`;
+    let img = flagCode.parentElement.querySelector("img");
+    img.src = newScr;
+}
+
+btn.addEventListener("click", async (evt) => {
+    evt.preventDefault();
+    let amount = document.querySelector(".amount input");
+    let amtVal = amount.value;
+    if (amtVal === "" || amtVal < 1) {
+        amtVal = 1;
+        amount.value = 1;
+    }
+    console.log(fromCurr.value);
+    let URL =
+        fetch(`https://v6.exchangerate-api.com/v6/aa91af5ce54a20f13d748166/latest/${fromCurr.value}`)
+            .then(response => response.json())
+            .then(data => {
+                qouteCurr = toCurr.value;
+                const usdToInrRate = data.conversion_rates[qouteCurr];
+                let finalAmount=usdToInrRate * amtVal;
+                console.log(finalAmount);
+                msg.innerText=`${amtVal} ${fromCurr.value} = ${finalAmount} ${toCurr.value}`;
+            })
+            .catch(error => console.error('Error:', error));
+})
