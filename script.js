@@ -160,69 +160,83 @@ const countryList = {
     ZWD: "ZW",
 };
 
-
 const dropdowns = document.querySelectorAll(".dropdown select");
 const btn = document.querySelector("#getRate");
 const fromCurr = document.querySelector("#fromSelect");
 const toCurr = document.querySelector("#toSelect");
-const msg= document.querySelector(".msg");
+const msg = document.querySelector(".msg");
 
-function printMsg(){
-    fetch(`https://v6.exchangerate-api.com/v6/aa91af5ce54a20f13d748166/latest/usd`)
-            .then(response => response.json())
-            .then(data => {
-                const usdToInrRate = data.conversion_rates[inr];
-                let finalAmount=usdToInrRate * 1;
-                console.log(finalAmount);
-                msg.innerText = `1 USD = ${finalAmount} INR`;
-            })
-            .catch(error => console.error('Error:', error));
-}
-
+// Populate dropdowns with currency codes
 for (let select of dropdowns) {
-    for (code in countryList) {
+    for (let code in countryList) {
         let newOption = document.createElement("option");
         newOption.innerText = code;
         newOption.value = code;
         if (select.name === "form" && code === "USD") {
             newOption.selected = "selected";
-        }
-        else if (select.name === "to" && code === "INR") {
+        } else if (select.name === "to" && code === "INR") {
             newOption.selected = "selected";
         }
         select.append(newOption);
-    } select.addEventListener("change", (evt) => {
+    }
+    select.addEventListener("change", (evt) => {
         updateFlag(evt.target);
-    })
+    });
 }
+
+// Function to update flag images based on selected currency
 const updateFlag = (flagCode) => {
     let curCode = flagCode.value;
     let countryCode = countryList[curCode];
     let newScr = `https://flagsapi.com/${countryCode}/flat/64.png`;
     let img = flagCode.parentElement.querySelector("img");
-    img.src = newScr;
+    if (img) {
+        img.src = newScr;
+    }
+};
+
+// Function to fetch and display USD to INR rate (or any default)
+function printMsg() {
+    fetch(`https://v6.exchangerate-api.com/v6/aa91af5ce54a20f13d748166/latest/usd`)
+        .then((response) => response.json())
+        .then((data) => {
+            const inrRate = data.conversion_rates['INR'];
+            let finalAmount = inrRate * 1;
+            msg.innerText = `1 USD = ${finalAmount} INR`;
+        })
+        .catch((error) => console.error('Error:', error));
 }
 
+// Event listener for the button to fetch conversion
 btn.addEventListener("click", async (evt) => {
     evt.preventDefault();
-    let amount = document.querySelector(".amount input");
-    let amtVal = amount.value;
+    let amountInput = document.querySelector(".amount input");
+    let amtVal = amountInput.value;
     if (amtVal === "" || amtVal < 1) {
         amtVal = 1;
-        amount.value = 1;
+        amountInput.value = 1;
     }
-    console.log(fromCurr.value);
-    let URL =
-        fetch(`https://v6.exchangerate-api.com/v6/aa91af5ce54a20f13d748166/latest/${fromCurr.value}`)
-            .then(response => response.json())
-            .then(data => {
-                qouteCurr = toCurr.value;
-                const usdToInrRate = data.conversion_rates[qouteCurr];
-                let finalAmount=usdToInrRate * amtVal;
-                console.log(finalAmount);
-                msg.innerText=`${amtVal} ${fromCurr.value} = ${finalAmount} ${toCurr.value}`;
-            })
-            .catch(error => console.error('Error:', error));
-})
+    const fromCurrency = fromCurr.value;
+    const toCurrency = toCurr.value;
 
+    fetch(`https://v6.exchangerate-api.com/v6/aa91af5ce54a20f13d748166/latest/${fromCurrency}`)
+        .then((response) => response.json())
+        .then((data) => {
+            const rate = data.conversion_rates[toCurrency];
+            let finalAmount = rate * amtVal;
+            msg.innerText = `${amtVal} ${fromCurrency} = ${finalAmount} ${toCurrency}`;
+        })
+        .catch((error) => console.error('Error:', error));
+});
 
+// Initialize default selection and fetch rate on page load
+window.addEventListener('load', () => {
+    fromCurr.value = "USD";
+    toCurr.value = "INR";
+
+    updateFlag(fromCurr);
+    updateFlag(toCurr);
+
+    // Trigger the rate fetch for default currencies
+    document.querySelector("#getRate").click();
+});
