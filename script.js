@@ -167,6 +167,18 @@ const fromCurr = document.querySelector("#fromSelect");
 const toCurr = document.querySelector("#toSelect");
 const msg= document.querySelector(".msg");
 
+function printMsg(){
+    fetch(`https://v6.exchangerate-api.com/v6/aa91af5ce54a20f13d748166/latest/usd`)
+            .then(response => response.json())
+            .then(data => {
+                const usdToInrRate = data.conversion_rates[inr];
+                let finalAmount=usdToInrRate * 1;
+                console.log(finalAmount);
+                msg.innerText = `1 USD = ${finalAmount} INR`;
+            })
+            .catch(error => console.error('Error:', error));
+}
+
 for (let select of dropdowns) {
     for (code in countryList) {
         let newOption = document.createElement("option");
@@ -212,4 +224,5 @@ btn.addEventListener("click", async (evt) => {
             })
             .catch(error => console.error('Error:', error));
 })
+
 
